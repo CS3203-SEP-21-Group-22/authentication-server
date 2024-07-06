@@ -1,22 +1,20 @@
 {
   "name": "authentication-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "type": "module",
+  "description": "```\r  npm install\r ```\r ```\r  npm start\r ```",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts"
+    "start": "node index.js",
+    "dev" : "nodemon auth-server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
-  },
-  "devDependencies": {
-    "@types/node": "^20.14.9"
+    "nodemon": "^3.1.4",
+    "oidc-provider": "^8.5.1",
+    "openid-client": "^5.6.5"
   }
 }
