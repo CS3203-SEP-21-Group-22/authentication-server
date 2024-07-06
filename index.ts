@@ -6,7 +6,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 // @ts-ignore
 import path from 'path';
-import { UserLogin, Client } from './index.interface';
+import { Request, Response } from 'express';
+import { Client, UserLogin } from './index.interface';
 
 const clients: Client[] = [
     { client_id: 'group22-client-id', client_secret: 'group22-secret-key' }
@@ -53,7 +54,7 @@ function verifyToken(token: string): any {
     }
 }
 
-app.get('/login', (req: express.Request, res: express.Response) => {
+app.get('/login', (req: Request, res: Response) => {
     const redirectUri = req.query.redirect_uri;
     const clientId = req.query.client_id;
     if (!redirectUri) {
@@ -62,7 +63,7 @@ app.get('/login', (req: express.Request, res: express.Response) => {
     res.render('login', { redirectUri: redirectUri, clientId: clientId });
 });
 
-app.post('/login', (req: express.Request, res: express.Response) => {
+app.post('/login', (req: Request, res: Response) => {
     const { email, password, redirectUri, clientId } = req.body;
     if (!email || !password || !redirectUri || !clientId) {
         return res.status(400).send({ message: 'Bad Request' });
@@ -82,7 +83,7 @@ app.post('/login', (req: express.Request, res: express.Response) => {
     }
 });
 
-app.post('/refresh', (req: express.Request, res: express.Response) => {
+app.post('/refresh', (req: Request, res: Response) => {
     const { refresh_token } = req.body;
     if (!refresh_token) {
         return res.status(400).send({ message: 'Bad Request' });
