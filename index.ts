@@ -32,8 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
-function generateIdToken(email: string, firstName: string, lastName: string, client: Client): string {
-    return jwt.sign({ email: email, firstName: firstName, lastName: lastName, client_id: client.client_id }, client.client_secret, { algorithm: 'HS256', expiresIn: '15m' });
+function generateIdToken(email: string, firstName: string, lastName: string, contactNumber: string, client: Client): string {
+    return jwt.sign({ email: email, firstName: firstName, lastName: lastName, contactNumber: contactNumber, client_id: client.client_id }, client.client_secret, { algorithm: 'HS256', expiresIn: '15m' });
 }
 
 function generateAccessToken(email: string, client: Client): string {
@@ -74,7 +74,7 @@ app.post('/login', (req: Request, res: Response) => {
     }
     const user = users.find(u => u.email === email && u.password === password);
     if (user) {
-        const idToken = generateIdToken(user.email, user.firstName, user.lastName, client)
+        const idToken = generateIdToken(user.email, user.firstName, user.lastName, user.contactNumber, client)
         const accessToken = generateAccessToken(user.email, client)
         const refreshToken = generateRefreshToken(user.email, client)
         res.redirect(`${redirectUri}?id_token=${idToken}&access_token=${accessToken}&refresh_token=${refreshToken}`);
