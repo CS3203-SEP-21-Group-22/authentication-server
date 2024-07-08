@@ -3,6 +3,7 @@ interface UserLogin {
     password: string;
     firstName: string;
     lastName: string;
+    contactNumber: string;
 }
 
 interface Client {

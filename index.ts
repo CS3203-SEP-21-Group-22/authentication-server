@@ -14,16 +14,16 @@ const clients: Client[] = [
 ];
 
 const users: UserLogin[] = [
-    { email: 'SmithJA@uoe.us', password: '2345#abc', firstName: 'John', lastName: 'Smith' },
-    { email: 'BrownTR@uoe.us', password: '9876#def', firstName: 'Tom', lastName: 'Brown' },
-    { email: 'JohnsonKA@uoe.us', password: '5432#ghi', firstName: 'Kevin', lastName: 'Johnson' },
-    { email: 'TaylorMB@uoe.us', password: '6789#jkl', firstName: 'Mary', lastName: 'Taylor' },
-    { email: 'LeeCH@uoe.us', password: '1357#mno', firstName: 'Helen', lastName: 'Lee' },
-    { email: 'WalkerJS@uoe.us', password: '2468#pqr', firstName: 'Sam', lastName: 'Walker' },
-    { email: 'HarrisAG@uoe.us', password: '1590#stu', firstName: 'Alice', lastName: 'Harris' },
-    { email: 'MartinBM@uoe.us', password: '8642#vwx', firstName: 'Brian', lastName: 'Martin' },
-    { email: 'ThompsonDR@uoe.us', password: '7531#yz', firstName: 'David', lastName: 'Thompson' },
-    { email: 'GarciaLM@uoe.us', password: '9087#klm', firstName: 'Linda', lastName: 'Garcia' }
+    { email: 'SmithJA@uoe.us', password: '2345#abc', firstName: 'John', lastName: 'Smith',  contactNumber: '+44234567890' },
+    { email: 'BrownTR@uoe.us', password: '9876#def', firstName: 'Tom', lastName: 'Brown', contactNumber: '+44876543210' },
+    { email: 'JohnsonKA@uoe.us', password: '5432#ghi', firstName: 'Kevin', lastName: 'Johnson', contactNumber: '+44543218970' },
+    { email: 'TaylorMB@uoe.us', password: '6789#jkl', firstName: 'Mary', lastName: 'Taylor', contactNumber: '+44654329810' },
+    { email: 'LeeCH@uoe.us', password: '1357#mno', firstName: 'Helen', lastName: 'Lee', contactNumber: '+44765432190' },
+    { email: 'WalkerJS@uoe.us', password: '2468#pqr', firstName: 'Sam', lastName: 'Walker', contactNumber: '+44876543210' },
+    { email: 'HarrisAG@uoe.us', password: '1590#stu', firstName: 'Alice', lastName: 'Harris', contactNumber: '+44654329810' },
+    { email: 'MartinBM@uoe.us', password: '8642#vwx', firstName: 'Brian', lastName: 'Martin', contactNumber: '+44543218970' },
+    { email: 'ThompsonDR@uoe.us', password: '7531#yz', firstName: 'David', lastName: 'Thompson', contactNumber: '+44234567890' },
+    { email: 'GarciaLM@uoe.us', password: '9087#klm', firstName: 'Linda', lastName: 'Garcia', contactNumber: '+44765432190' }
 ];
 
 const app = express();
