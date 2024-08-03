@@ -7,12 +7,15 @@ import bodyParser from 'body-parser';
 // @ts-ignore
 import path from 'path';
 import { Request, Response } from 'express';
-import { Client, UserLogin } from './index.interface';
+import { Client, UserLogin, UserData } from './index.interface';
 
+// sample clients of authentication server
 const clients: Client[] = [
+    // .NET web app client
     { client_id: 'group22-client-id', client_secret: 'group22-secret-key' }
 ];
 
+// sample user data
 const users: UserLogin[] = [
     { email: 'SmithJA@uoe.us', password: '2345#abc', firstName: 'John', lastName: 'Smith',  contactNumber: '+44234567890' },
     { email: 'BrownTR@uoe.us', password: '9876#def', firstName: 'Tom', lastName: 'Brown', contactNumber: '+44876543210' },
@@ -29,9 +32,11 @@ const users: UserLogin[] = [
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');  // enables ejs template engine
+app.use(express.static(path.join(__dirname, 'public')));    // serves static files from public folder
 
+
+// helper functions
 function generateIdToken(email: string, firstName: string, lastName: string, contactNumber: string, client: Client): string {
     return jwt.sign({ email: email, firstName: firstName, lastName: lastName, contactNumber: contactNumber, client_id: client.client_id }, client.client_secret, { algorithm: 'HS256', expiresIn: '15m' });
 }
@@ -44,6 +49,7 @@ function generateRefreshToken(email: string, client: Client): string {
     return jwt.sign({ email: email, client_id: client.client_id }, client.client_secret, { algorithm: 'HS256', expiresIn: '7d' });
 }
 
+// validates refresh token and returns decoded data
 function verifyToken(token: string): any {
     const client_id = jwt.decode(token).client_id;
     const client = clients.find(c => c.client_id === client_id);
@@ -54,6 +60,20 @@ function verifyToken(token: string): any {
     }
 }
 
+// returns a list of all users with necessary data
+function getUserDataList(): UserData[] {
+    return users.map(user => {
+        return {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            contactNumber: user.contactNumber
+        }
+    });
+}
+
+// API routes
+// renders login page with redirectUri and clientId
 app.get('/login', (req: Request, res: Response) => {
     const redirectUri = req.query.redirect_uri;
     const clientId = req.query.client_id;
@@ -63,6 +83,7 @@ app.get('/login', (req: Request, res: Response) => {
     res.render('login', { redirectUri: redirectUri, clientId: clientId });
 });
 
+// Validates user credentials and redirects to redirectUri with tokens
 app.post('/login', (req: Request, res: Response) => {
     const { email, password, redirectUri, clientId } = req.body;
     if (!email || !password || !redirectUri || !clientId) {
@@ -74,6 +95,7 @@ app.post('/login', (req: Request, res: Response) => {
     }
     const user = users.find(u => u.email === email && u.password === password);
     if (user) {
+        // successful login
         const idToken = generateIdToken(user.email, user.firstName, user.lastName, user.contactNumber, client)
         const accessToken = generateAccessToken(user.email, client)
         const refreshToken = generateRefreshToken(user.email, client)
@@ -83,6 +105,7 @@ app.post('/login', (req: Request, res: Response) => {
     }
 });
 
+// generates new access token using refresh token
 app.post('/refresh', (req: Request, res: Response) => {
     const { refresh_token } = req.body;
     if (!refresh_token) {
@@ -98,6 +121,18 @@ app.post('/refresh', (req: Request, res: Response) => {
         res.status(401).send({ message: 'Unauthorized' });
     }
 });
+
+// returns user data list
+app.post('/poll-data', (req: Request, res: Response) => {
+    const { client_id, client_secret } = req.body;
+    const client = clients.find(c => c.client_id === client_id && c.client_secret === client_secret);
+    if (!client) {
+        return res.status(401).send({ message: 'Unauthorized' });
+    }
+    const userDataList = getUserDataList();
+    res.send(userDataList);
+});
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
