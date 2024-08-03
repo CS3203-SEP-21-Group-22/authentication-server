@@ -75,11 +75,13 @@ function getUserDataList(): UserData[] {
 // API routes
 // renders login page with redirectUri and clientId
 app.get('/login', (req: Request, res: Response) => {
-    const redirectUri = req.query.redirect_uri;
-    const clientId = req.query.client_id;
-    if (!redirectUri) {
+    let redirectUri = req.query.redirectUri?.toString();
+    let clientId = req.query.clientId?.toString();
+    if (!redirectUri || !clientId) {
         return res.status(400).send({ message: 'Bad Request' });
     }
+    if (redirectUri && redirectUri.includes('?')) redirectUri = redirectUri.split('?')[0];
+    if (clientId && clientId.includes('?')) clientId = clientId.split('?')[0];
     res.render('login', { redirectUri: redirectUri, clientId: clientId });
 });
 
