@@ -97,8 +97,7 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs"); // enables ejs template engine
-app.use(express.static(path.join(__dirname, "public"))); // serves static files from public folder
-
+// app.use(express.static(path.join(__dirname, "public"))); // serves static files from public folder
 // helper functions
 function generateIdToken(
   email: string,
