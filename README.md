@@ -37,7 +37,7 @@
    }
    ```
 
-5. Start the server. The server will run on port 3000 by default.
+5. Start the server. The server will run on port 3001.
 
    ```
    npm start
