@@ -30,10 +30,10 @@
 
 4. In index.ts file, add a client under `clients` object with the following structure.
 
-   ```
+   ```json
    {
-      "client_id": "CLIENT_ID_FOR_YOUR_BACKEND",
-      "client_secret": "CLIENT_SECRET_FOR_YOUR_BACKEND"
+     "client_id": "CLIENT_ID_FOR_YOUR_BACKEND",
+     "client_secret": "CLIENT_SECRET_FOR_YOUR_BACKEND"
    }
    ```
 
