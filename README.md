@@ -1,5 +1,7 @@
 # Inventory Management System for computer laboratories - Authentication Server
 
+#### Authentication server of Inventory Management System for computer laboratories, is an abstract implementation, which was developed to mock the existing user management system of the Institution.
+
 ## Local Development Setup
 
 ### Prerequisites
@@ -40,5 +42,3 @@
    ```
    npm start
    ```
-
-- Authentication server of Inventory Management System for computer laboratories, is an abstract implementation, which was developed to mock the existing user management system of the Institution.
